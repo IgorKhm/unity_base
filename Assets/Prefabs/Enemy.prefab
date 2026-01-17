@@ -184,6 +184,12 @@ MonoBehaviour:
     m_Bits: 8
   stuckSpeedThreshold: 0.1
   stuckTimeToRepath: 0.4
+  steerStrength: 8
+  maxAccel: 20
+  arriveDistance: 0.6
+  forwardBias: 0.75
+  homeFollow: 0.2
+  minTargetDistance: 1.2
 --- !u!114 &2921745688639248112
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -224,7 +230,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Game::EnemyVision2D
   player: {fileID: 0}
-  viewDistance: 18
+  viewDistance: 15
   obstacleMask:
     serializedVersion: 2
     m_Bits: 8

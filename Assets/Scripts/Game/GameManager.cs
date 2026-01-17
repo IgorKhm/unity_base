@@ -1,3 +1,4 @@
+using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -11,7 +12,7 @@ public class GameManager : MonoBehaviour
     [Header("Gameplay Root (optional)")]
     public GameObject gameplayRoot; // put Player+Enemy under this if you want easy enable/disable
 
-    
+    public int enemiesRemaining;
     
     void OnEnable()
     {
@@ -25,8 +26,12 @@ public class GameManager : MonoBehaviour
 
     private void OnAnyDeath(GameObject dead)
     {
-        // Win if an Enemy died
-        if (dead.layer == LayerMask.NameToLayer("Enemy"))
+        if (dead.layer != LayerMask.NameToLayer("Enemy"))
+            return;
+
+        enemiesRemaining--;
+
+        if (enemiesRemaining <= 0)
             Win();
     }
 
@@ -45,6 +50,7 @@ public class GameManager : MonoBehaviour
     void ShowTitle()
     {
         Time.timeScale = 0f;
+        enemiesRemaining = 0;
         if (titlePanel) titlePanel.SetActive(true);
         if (winPanel) winPanel.SetActive(false);
         if (gameplayRoot) gameplayRoot.SetActive(false);
@@ -56,6 +62,9 @@ public class GameManager : MonoBehaviour
         if (titlePanel) titlePanel.SetActive(false);
         if (winPanel) winPanel.SetActive(false);
         if (gameplayRoot) gameplayRoot.SetActive(true);
+        
+        enemiesRemaining = FindObjectsByType<Health>(FindObjectsSortMode.None)
+            .Count(h => h.gameObject.layer == LayerMask.NameToLayer("Enemy"));
 
         Time.timeScale = 1f;
     }
@@ -71,4 +80,14 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 1f;
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
+    
+    public void QuitGame()
+    {
+        Application.Quit();
+
+    #if UNITY_EDITOR
+            UnityEditor.EditorApplication.isPlaying = false;
+    #endif
+        }
+
 }
