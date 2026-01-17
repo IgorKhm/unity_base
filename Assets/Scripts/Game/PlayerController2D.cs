@@ -49,7 +49,6 @@ public class PlayerController2D : MonoBehaviour
         if (jumpPressedThisFrame && jumpsRemaining > 0)
         {
             jumpsRemaining--;
-            
 
             // Reset vertical velocity so double-jump feels consistent
             Vector2 v = rb.linearVelocity;
