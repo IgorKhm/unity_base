@@ -40,12 +40,7 @@ public class AudioManager : MonoBehaviour
         sfxSource.PlayOneShot(clip, volume);
     }
 
-    public void PlayShoot()
-    {
-        Debug.Log("shoooooot");
-        PlaySFX(shoot);
-    }
-
+    public void PlayShoot() => PlaySFX(shoot);
     public void PlayHit()     => PlaySFX(hit);
     public void PlayEnemyDie()=> PlaySFX(enemyDie);
     public void PlayPlayerHit()=> PlaySFX(playerHit);

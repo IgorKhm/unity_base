@@ -27,7 +27,7 @@ public class EnemyContactDamage : MonoBehaviour
 
         if (chaser != null)
             xDir = chaser.LastApproachXDir;
-        
+
         var enemyCol = GetComponent<Collider2D>();
 
         ph.TakeDamage(damage, xDir);
@@ -38,7 +38,11 @@ public class EnemyContactDamage : MonoBehaviour
             StartCoroutine(IgnoreForSeconds(playerCol, hitCooldown));
 
         if (chaser != null)
+        {
+            GetComponent<EnemyChaser2D>()?.Stun(hitCooldown);
+            GetComponent<EnemyWalker2D>()?.Stun(hitCooldown);
             chaser.Stun(hitCooldown);
+        }
     }
 
     private IEnumerator IgnoreForSeconds(Collider2D playerCol, float seconds)
