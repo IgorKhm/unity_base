@@ -3,17 +3,14 @@ using UnityEngine.InputSystem;
 
 public class PlayerController2D : MonoBehaviour
 {
-    [Header("Movement")]
-    public float maxSpeed = 8f;
+    [Header("Movement")] public float maxSpeed = 8f;
     public float acceleration = 40f;
     public float deceleration = 60f;
 
-    [Header("Jump")]
-    public float jumpVelocity = 12f;
+    [Header("Jump")] public float jumpVelocity = 12f;
     public int maxJumps = 2;
 
-    [Header("Ground Check")]
-    public Transform groundCheck;
+    [Header("Ground Check")] public Transform groundCheck;
     public float groundCheckRadius = 0.15f;
     public LayerMask groundMask;
 
@@ -23,17 +20,19 @@ public class PlayerController2D : MonoBehaviour
 
     private Rigidbody2D rb;
     private int jumpsRemaining;
+    private Animator anim;
 
     void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
+        anim = GetComponent<Animator>();
     }
 
     void Start()
     {
         jumpsRemaining = maxJumps;
     }
-    
+
     private float stunnedUntil;
 
     public void Stun(float seconds)
@@ -73,7 +72,7 @@ public class PlayerController2D : MonoBehaviour
         float speedDiff = targetSpeed - rb.linearVelocity.x;
         float accelRate = (Mathf.Abs(targetSpeed) > 0.01f) ? acceleration : deceleration;
 
-        
+
         rb.AddForce(Vector2.right * (speedDiff * accelRate));
     }
 
@@ -88,12 +87,23 @@ public class PlayerController2D : MonoBehaviour
     {
         if (ctx.performed)
             jumpPressedThisFrame = true;
+
+        anim.SetBool("IsJumping", true);
     }
 
     bool IsGrounded()
     {
         if (groundCheck == null) return false;
-        return Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, groundMask) != null;
+
+        bool isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, groundMask) != null;
+
+        if (isGrounded)
+        {
+            anim.SetBool("IsJumping", false);
+            return true;
+        }
+
+        return false;
     }
 
     void OnDrawGizmosSelected()

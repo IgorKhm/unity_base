@@ -34,6 +34,8 @@ public class EnemyChaser2D : MonoBehaviour
     public float forwardBias = 0.75f;      // 0..1, higher = less random
     public float homeFollow = 0.2f;        // 0..1, how much "home" follows current position
     public float minTargetDistance = 1.2f; // prevents tiny hops
+    
+    public bool IsStunned => stunned;
 
 
 

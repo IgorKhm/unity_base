@@ -35,6 +35,7 @@ public class Shooter2D : MonoBehaviour
             nextFireTime = Time.time + fireCooldown;
 
             Projectile p = Instantiate(projectilePrefab, muzzle.position, Quaternion.identity);
+            AudioManager.I?.PlayShoot();
 
             // In 2D, "right" is your forward aim direction because we rotate GunPivot.right
             Vector2 dir = muzzle.right;
