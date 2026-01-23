@@ -36,15 +36,8 @@ public class AudioManager : MonoBehaviour
 
     public void PlaySFX(AudioClip clip, float volume = 1f)
     {
-        Debug.Log($"PlaySFX called. clip={(clip?clip.name:"NULL")} sfxSource={(sfxSource? sfxSource.name:"NULL")} vol={volume}");
-
         if (clip == null || sfxSource == null) return;
-
-        Debug.Log($"Before: isPlaying={sfxSource.isPlaying} spatialBlend={sfxSource.spatialBlend} vol={sfxSource.volume} mute={sfxSource.mute} output={sfxSource.outputAudioMixerGroup}");
-
         sfxSource.PlayOneShot(clip, volume);
-
-        Debug.Log($"After: isPlaying={sfxSource.isPlaying} time={sfxSource.time}");
     }
 
     public void PlayShoot()
