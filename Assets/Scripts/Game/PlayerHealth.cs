@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class PlayerHealth : MonoBehaviour
 {
-    public int maxHP = 3;
+    public int maxHP = 5;
     public float invulnSeconds = 0.75f;
 
     public int CurrentHP { get; private set; }
